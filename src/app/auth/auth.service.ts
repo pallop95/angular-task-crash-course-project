@@ -8,7 +8,7 @@ import { ResponseLogin } from '../interface/Response-login';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private apiUrl = 'http://localhost:5001/login';
+  private apiUrl = 'http://localhost:9001/workflow-service/login';
 
   private isAuthenticated = false;
   // private token: string = '';
@@ -50,15 +50,15 @@ export class AuthService {
   //     });
   // }
 
-  login(userId: string, password: string) {
+  login(username: string, password: string) {
     console.log('login...')
-    const authData: AuthData = { userId, password };
+    const authData: AuthData = { username, password };
     this.http
       // .post<{ token: string; expiresIn: number; userId: string }>(
       // .post<ResponseLogin>(
-      .get<ResponseLogin>(
-        this.apiUrl
-        // authData
+      .post<ResponseLogin>(
+        `${this.apiUrl}/auth`,
+        authData
       )
       .subscribe(
         (response) => {
@@ -91,6 +91,7 @@ export class AuthService {
           }
         },
         (error) => {
+
           this.authStatusListener.next(false);
         }
       );

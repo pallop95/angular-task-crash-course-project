@@ -50,6 +50,7 @@ export class TasksV2Component implements OnInit {
   onAssign(taskDetail: TaskDetail) {
     //  console.log('taskDetail => ', taskDetail);
     const requestSubmitTask: RequestSubmitTask = {
+      userId: taskDetail.userId,
       taskId: taskDetail.taskId,
       assign: taskDetail.assign,
       description: 'Test desc'

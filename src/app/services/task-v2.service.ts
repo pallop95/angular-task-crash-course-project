@@ -10,13 +10,13 @@ import { ResponseTask, TaskDetail } from '../interface/Response-task';
   providedIn: 'root'
 })
 export class TaskV2Service {
-  private apiUrl = 'http://localhost:5001/task'
-  private apiUrlSubmit = 'http://localhost:5001/submit'
+  private apiUrl = 'http://localhost:9001/workflow-service/task'
+  // private apiUrlSubmit = 'http://localhost:9001/workflow-service/submit'
 
   constructor(private http: HttpClient) { }
 
   getTaskList(requestTask: RequestTask): Observable<ResponseTask> {
-    return this.http.get<ResponseTask>(this.apiUrl);
+    return this.http.post<ResponseTask>(`${this.apiUrl}/get`, requestTask);
   }
 
   // {
@@ -27,6 +27,6 @@ export class TaskV2Service {
   // }
   submitAssign(requestSubmitTask: RequestSubmitTask): Observable<ResponseSubmitTask> {
     // console.log()
-    return this.http.get<ResponseTask>(this.apiUrlSubmit);
+    return this.http.post<ResponseTask>(`${this.apiUrl}/submit`, requestSubmitTask);
   }
 }
