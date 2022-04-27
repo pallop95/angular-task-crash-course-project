@@ -4,6 +4,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
+import { MatTableModule } from '@angular/material/table';
+import { MatButtonModule } from '@angular/material/button';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -13,11 +15,16 @@ import { TaskItemComponent } from './components/task-item/task-item.component';
 import { AddTaskComponent } from './components/add-task/add-task.component';
 import { AboutComponent } from './components/about/about.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { LoginComponent } from './components/login/login.component';
+import { AuthGuard } from './auth/auth.guard';
+import { TasksV2Component } from './components/tasks-v2/tasks-v2.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 const appRoutes: Routes = [
-  { path: '', component: TasksComponent },
-  { path: 'about', component: AboutComponent },
-  { path: 'about2', component: ButtonComponent },
+  { path: 'login', component: LoginComponent },
+  { path: '', component: TasksV2Component, canActivate: [AuthGuard] },
+  { path: 'task-2', component: TasksComponent, canActivate: [AuthGuard] },
+  { path: 'about', component: AboutComponent, canActivate: [AuthGuard] },
 ];
 @NgModule({
   declarations: [
@@ -29,15 +36,20 @@ const appRoutes: Routes = [
     AddTaskComponent,
     AboutComponent,
     FooterComponent,
+    LoginComponent,
+    TasksV2Component,
   ],
   imports: [
     BrowserModule,
     FontAwesomeModule,
     HttpClientModule,
     FormsModule,
+    MatTableModule,
+    MatButtonModule,
     RouterModule.forRoot(appRoutes, { enableTracing: true }),
+    BrowserAnimationsModule,
   ],
-  providers: [],
+  providers: [AuthGuard],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

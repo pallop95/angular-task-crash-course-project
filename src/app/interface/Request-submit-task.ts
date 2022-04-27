@@ -1,6 +1,7 @@
 import { Assign } from "./Assign";
 
-export interface RequestTask {
+export interface RequestSubmitTask {
+  taskId: string;
   assign: Assign;
   description: string;
 }

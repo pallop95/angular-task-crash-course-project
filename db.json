@@ -1,4 +1,45 @@
 {
+  "login": {
+    "isSuccess" : true,
+    "role" : {
+      "id" : "1001",
+      "name" : "manager"
+    },
+    "detail" : {
+      "username" : "Chaiyarut",
+      "emai" : "chaiyarut@gmail.com",
+      "userId" : "221512"
+    }
+
+  },
+  "task": {
+    "isSuccess": true,
+    "taskList": [
+      {
+        "taskId": "A-586245",
+        "taskName": "Task name 1",
+        "taskDate": "2022-04-25",
+        "userId": 1234,
+        "isAssign": true,
+        "assign": {
+          "userIds": [
+            "1234",
+            "5678"
+          ]
+        }
+      },
+      {
+        "taskId": "A-586245",
+        "taskName": "Task name 1",
+        "taskDate": "2022-04-25",
+        "userId": 1234,
+        "isAssign": false
+      }
+    ]
+  },
+  "submit": {
+    "isSuccess" : true
+  },
   "tasks": [
     {
       "id": 1,

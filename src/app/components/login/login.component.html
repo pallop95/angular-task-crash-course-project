@@ -1,0 +1,11 @@
+<form class="add-form" (ngSubmit)="onSubmit()">
+  <div class="form-control">
+    <label for="text">Username</label>
+    <input type="text" name="username" id="username" placeholder="Username" [(ngModel)]="username" />
+  </div>
+  <div class="form-control">
+    <label for="day">Password</label>
+    <input type="password" name="password" id="password" placeholder="Password" [(ngModel)]="password" />
+  </div>
+  <input type="submit" value="Login" class="btn btn-block" />
+</form>
