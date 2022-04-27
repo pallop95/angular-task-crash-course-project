@@ -6,6 +6,9 @@ import { FormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+// import { } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -19,6 +22,7 @@ import { LoginComponent } from './components/login/login.component';
 import { AuthGuard } from './auth/auth.guard';
 import { TasksV2Component } from './components/tasks-v2/tasks-v2.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DialogComponent } from './components/dialog/dialog.component';
 
 const appRoutes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -38,6 +42,7 @@ const appRoutes: Routes = [
     FooterComponent,
     LoginComponent,
     TasksV2Component,
+    DialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -46,6 +51,8 @@ const appRoutes: Routes = [
     FormsModule,
     MatTableModule,
     MatButtonModule,
+    MatDialogModule,
+    MatFormFieldModule,
     RouterModule.forRoot(appRoutes, { enableTracing: true }),
     BrowserAnimationsModule,
   ],
