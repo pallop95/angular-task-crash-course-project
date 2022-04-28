@@ -18,6 +18,8 @@ export class TasksV2Component implements OnInit {
   roleId: string = '';
   userId: string = '';
 
+  currentSelectedTask: TaskDetail = this.initTaskDetail();
+
   // export class TableBasicExample {
   displayedColumns: string[] = [
     'taskId',
@@ -39,11 +41,23 @@ export class TasksV2Component implements OnInit {
     this.roleId = this.authService.getRoleId() ?? '';
     this.userId = this.authService.getUserId() ?? '';
 
-    setInterval(() => {
-      this.getTasks(this.userId, this.roleId);
-    }, 1000);
+    // setInterval(() => {
+    this.getTasks(this.userId, this.roleId);
+    // }, 1000);
   }
 
+  initTaskDetail() {
+    return {
+      taskId: '',
+      taskName: '',
+      taskDate: '',
+      userId: '',
+      isAssign: false,
+      assign: {
+        userIds: []
+      }
+    }
+  }
   displayHello() {
     console.log('Hello');
   }
@@ -58,7 +72,9 @@ export class TasksV2Component implements OnInit {
 
   onAssign(taskDetail: TaskDetail) {
     //  console.log('taskDetail => ', taskDetail);
-    this.openDialog();
+    this.currentSelectedTask = taskDetail;
+
+    this.openDialog(taskDetail);
     // const requestSubmitTask: RequestSubmitTask = {
     //   userId: taskDetail.userId,
     //   taskId: taskDetail.taskId,
@@ -72,12 +88,53 @@ export class TasksV2Component implements OnInit {
     //   });
   }
 
-  openDialog() {
-    const dialogConfig = new MatDialogConfig();
+  submitAssign(users: string[]) {
+    // console.log('taskDetail => ', taskDetail);
+    const requestSubmitTask: RequestSubmitTask = {
+      userId: this.currentSelectedTask.userId,
+      taskId: this.currentSelectedTask.taskId,
+      assign: this.currentSelectedTask.assign,
+      description: 'Test desc',
+    };
+    this.tasksV2Service
+      .submitAssign(requestSubmitTask)
+      .subscribe((response) => {
+        alert(`isSuccess => ${response.isSuccess}`);
+      });
 
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
+    this.currentSelectedTask = this.initTaskDetail();
+  }
 
-    this.dialog.open(DialogComponent, dialogConfig);
+  openDialog(taskDetail: TaskDetail) {
+    // const dialogConfig = new MatDialogConfig();
+
+    // dialogConfig.disableClose = true;
+    // dialogConfig.autoFocus = true;
+
+    // this.dialog.open(DialogComponent, dialogConfig);
+
+    let dialogRef = this.dialog.open(DialogComponent, {
+      // data: { name: 'Pallop' },
+      data: { ids: taskDetail.assign.userIds },
+    });
+
+    // dialogRef.afterClosed().subscribe((result) => {
+    //   console.log(`Dialog result: ${result}`);
+    // });
+
+    const dialogSubmitSubscription =
+      dialogRef.componentInstance.submitClicked.subscribe((result) => {
+        // console.log('Got the data!', result);
+
+        // do something here with the data
+        dialogRef.componentInstance.closeDialog();
+        dialogSubmitSubscription.unsubscribe();
+
+        if(result.length > 1) {
+          this.submitAssign(result);
+        } else {
+          alert('plss select user(s)!');
+        }
+      });
   }
 }

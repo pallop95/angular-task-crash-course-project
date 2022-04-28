@@ -2,12 +2,13 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { MatTableModule } from '@angular/material/table';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 // import { } from '@angular/material';
 
 import { AppComponent } from './app.component';
@@ -53,6 +54,8 @@ const appRoutes: Routes = [
     MatButtonModule,
     MatDialogModule,
     MatFormFieldModule,
+    MatSelectModule,
+    ReactiveFormsModule,
     RouterModule.forRoot(appRoutes, { enableTracing: true }),
     BrowserAnimationsModule,
   ],

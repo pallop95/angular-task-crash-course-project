@@ -11,12 +11,14 @@ import { ResponseTask, TaskDetail } from '../interface/Response-task';
 })
 export class TaskV2Service {
   private apiUrl = 'http://localhost:9001/workflow-service/task'
+  private apiUrlMock = 'http://localhost:5001/task'
   // private apiUrlSubmit = 'http://localhost:9001/workflow-service/submit'
 
   constructor(private http: HttpClient) { }
 
   getTaskList(requestTask: RequestTask): Observable<ResponseTask> {
     return this.http.post<ResponseTask>(`${this.apiUrl}/get`, requestTask);
+    // return this.http.get<ResponseTask>(`${this.apiUrlMock}`);
   }
 
   // {

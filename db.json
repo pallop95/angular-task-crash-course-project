@@ -1,16 +1,15 @@
 {
   "login": {
-    "isSuccess" : true,
-    "role" : {
-      "id" : "1001",
-      "name" : "manager"
+    "isSuccess": true,
+    "role": {
+      "id": "1001",
+      "name": "manager"
     },
-    "detail" : {
-      "username" : "Chaiyarut",
-      "emai" : "chaiyarut@gmail.com",
-      "userId" : "221512"
+    "detail": {
+      "username": "Chaiyarut",
+      "emai": "chaiyarut@gmail.com",
+      "userId": "221512"
     }
-
   },
   "task": {
     "isSuccess": true,
@@ -38,7 +37,7 @@
     ]
   },
   "submit": {
-    "isSuccess" : true
+    "isSuccess": true
   },
   "tasks": [
     {
