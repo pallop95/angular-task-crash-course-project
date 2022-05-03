@@ -20,6 +20,7 @@
         "taskDate": "2022-04-25",
         "userId": 1234,
         "isAssign": true,
+        "status": true,
         "assign": {
           "userIds": [
             "1234",
@@ -32,7 +33,8 @@
         "taskName": "Task name 1",
         "taskDate": "2022-04-25",
         "userId": 1234,
-        "isAssign": false
+        "isAssign": false,
+        "status": false
       }
     ]
   },

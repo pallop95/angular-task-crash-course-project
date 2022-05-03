@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { RequestSubmitTask } from 'src/app/interface/Request-submit-task';
 import { ResponseLogin } from 'src/app/interface/Response-login';
 import { ResponseTask, TaskDetail } from 'src/app/interface/Response-task';
+import { NotificationService } from 'src/app/services/notification.service';
 import { TaskV2Service } from 'src/app/services/task-v2.service';
 import { DialogComponent } from '../dialog/dialog.component';
 
@@ -17,10 +18,10 @@ export class TasksV2Component implements OnInit {
   tasks: TaskDetail[] = [];
   roleId: string = '';
   userId: string = '';
+  unread = 0;
 
   currentSelectedTask: TaskDetail = this.initTaskDetail();
 
-  // export class TableBasicExample {
   displayedColumns: string[] = [
     'taskId',
     'taskName',
@@ -28,22 +29,37 @@ export class TasksV2Component implements OnInit {
     'userId',
     'assign',
   ];
-  // dataSource = ELEMENT_DATA;
-  // }
+
+  subscription: Subscription;
+  // subscriptionTaskDetails: Subscription;
 
   constructor(
     private authService: AuthService,
     private tasksV2Service: TaskV2Service,
-    private dialog: MatDialog
-  ) {}
+    private dialog: MatDialog,
+    private notificationService: NotificationService
+  ) {
+    this.subscription = this.notificationService.onToggleNumberNotification().subscribe(
+      v => {
+        this.unread = v;
+      }
+    )
+
+    // this.subscriptionTaskDetails = this.notificationService.onUpdateTaskDetails().subscribe(
+    //   v => {
+    //     this.tasks = v;
+    //   }
+    // )
+  }
 
   ngOnInit(): void {
     this.roleId = this.authService.getRoleId() ?? '';
     this.userId = this.authService.getUserId() ?? '';
 
-    // setInterval(() => {
-    this.getTasks(this.userId, this.roleId);
-    // }, 1000);
+    setInterval(() => {
+      this.getTasks(this.userId, this.roleId);
+      this.notificationService.toggleTaskDetails(this.tasks);
+    }, 1000);
   }
 
   initTaskDetail() {
@@ -53,13 +69,11 @@ export class TasksV2Component implements OnInit {
       taskDate: '',
       userId: '',
       isAssign: false,
+      status: 'UNREAD',
       assign: {
         userIds: []
       }
     }
-  }
-  displayHello() {
-    console.log('Hello');
   }
 
   getTasks(userId: string, roleId: string) {
@@ -67,7 +81,14 @@ export class TasksV2Component implements OnInit {
       .getTaskList({ userId, roleId })
       .subscribe((response) => {
         this.tasks = response.taskList;
+        this.unread = this.tasks.filter(t => t.status === 'UNREAD').length
+        this.updateNotifyUnread(this.unread);
       });
+
+  }
+
+  updateNotifyUnread(unread: Number) {
+    this.notificationService.toggleNumberNotification(unread);
   }
 
   onAssign(taskDetail: TaskDetail) {

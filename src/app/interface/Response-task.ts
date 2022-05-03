@@ -14,4 +14,5 @@ export interface TaskDetail {
   userId: string;
   isAssign: boolean;
   assign: Assign;
+  status: string;
 }

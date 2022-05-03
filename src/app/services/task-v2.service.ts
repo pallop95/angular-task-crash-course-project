@@ -17,8 +17,8 @@ export class TaskV2Service {
   constructor(private http: HttpClient) { }
 
   getTaskList(requestTask: RequestTask): Observable<ResponseTask> {
-    return this.http.post<ResponseTask>(`${this.apiUrl}/get`, requestTask);
-    // return this.http.get<ResponseTask>(`${this.apiUrlMock}`);
+    // return this.http.post<ResponseTask>(`${this.apiUrl}/get`, requestTask);
+    return this.http.get<ResponseTask>(`${this.apiUrlMock}`);
   }
 
   // {
@@ -30,5 +30,15 @@ export class TaskV2Service {
   submitAssign(requestSubmitTask: RequestSubmitTask): Observable<ResponseSubmitTask> {
     // console.log()
     return this.http.post<ResponseTask>(`${this.apiUrl}/submit`, requestSubmitTask);
+  }
+
+  updateTask(taskDetail: TaskDetail): Observable<TaskDetail> {
+    const url = `${this.apiUrlMock}/taskList/${taskDetail.taskId}`;
+    return this.http.put<TaskDetail>(url, taskDetail);
+  }
+
+  updateTaskStatus(taskDetail: TaskDetail): Observable<TaskDetail> {
+    const url = `${this.apiUrlMock}/taskList/${taskDetail.taskId}`;
+    return this.http.put<TaskDetail>(url, taskDetail);
   }
 }

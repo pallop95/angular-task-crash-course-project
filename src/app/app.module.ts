@@ -9,7 +9,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
-// import { } from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
+import { MatBadgeModule } from '@angular/material/badge';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatCardModule } from '@angular/material/card';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -56,6 +59,10 @@ const appRoutes: Routes = [
     MatFormFieldModule,
     MatSelectModule,
     ReactiveFormsModule,
+    MatIconModule,
+    MatBadgeModule,
+    MatMenuModule,
+    MatCardModule,
     RouterModule.forRoot(appRoutes, { enableTracing: true }),
     BrowserAnimationsModule,
   ],

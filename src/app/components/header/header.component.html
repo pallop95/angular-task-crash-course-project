@@ -3,6 +3,41 @@
   <h1>
     {{ title }}
   </h1>
+
+  <button
+    mat-fab
+    color="primary"
+    aria-label="Example icon button with a delete icon"
+    [matMenuTriggerFor]="menu"
+  >
+    <mat-icon
+      [matBadge]="number"
+      [matBadgeHidden]="number === 0"
+      matBadgeColor="warn"
+      >notifications</mat-icon
+    >
+  </button>
+  <mat-menu #menu="matMenu">
+    <!-- <button mat-menu-item *ngFor="let taskDetail of taskDetailList"> -->
+    <!-- <mat-icon>notifications_off</mat-icon>
+      <span>{{ taskDetail.taskName }}</span> -->
+    <!-- </button> -->
+    <!-- <ng-template [matMenuContent]="taskDetailList"> -->
+    <ng-template matMenuContent let-myobject="taskDetailList">
+      <ng-container *ngFor="let taskDetail of taskDetailList">
+        <button mat-menu-item (click)="onClickTask(taskDetail)">
+          <span>{{ taskDetail.taskName }}</span>
+          <mat-icon> {{ taskDetail.status === 'READ' ? 'done' : 'clear' }} </mat-icon>
+        </button>
+      </ng-container>
+
+      <!-- <ng-container *ngFor="let othermenu of menuItems.OtherMenus">
+        <button mat-menu-item>{{ othermenu }}</button>
+      </ng-container>
+
+      <button mat-menu-item>Log off {{ menuItems.ActiveUser.Name }}</button> -->
+    </ng-template>
+  </mat-menu>
   <app-button
     *ngIf="hasRoute('/')"
     color="{{ showAddTask ? 'red' : 'green' }}"
