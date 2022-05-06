@@ -15,6 +15,7 @@ export class NotificationService {
   constructor() { }
 
   toggleNumberNotification(number: Number): void {
+    console.log('toggleNumberNotification => ', number);
     this.number = number;
     this.subject.next(this.number);
   }

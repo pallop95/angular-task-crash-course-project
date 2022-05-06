@@ -20,7 +20,7 @@ const httpOptions = {
   providedIn: 'root',
 })
 export class TaskService {
-  private apiUrl = 'http://localhost:9001/workflow-service/tasks';
+  private apiUrl = 'http://localhost:9000/workflow-service/tasks';
 
   constructor(private http: HttpClient) {}
 

@@ -58,7 +58,6 @@ export class TasksV2Component implements OnInit {
 
     setInterval(() => {
       this.getTasks(this.userId, this.roleId);
-      this.notificationService.toggleTaskDetails(this.tasks);
     }, 1000);
   }
 
@@ -80,9 +79,12 @@ export class TasksV2Component implements OnInit {
     this.tasksV2Service
       .getTaskList({ userId, roleId })
       .subscribe((response) => {
+        console.log('response ...', response);
         this.tasks = response.taskList;
         this.unread = this.tasks.filter(t => t.status === 'UNREAD').length
+        console.log('getTasks updateNotiNumber...');
         this.updateNotifyUnread(this.unread);
+        this.notificationService.toggleTaskDetails(this.tasks);
       });
 
   }

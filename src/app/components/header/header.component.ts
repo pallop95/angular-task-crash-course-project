@@ -7,6 +7,8 @@ import { NotificationService } from 'src/app/services/notification.service';
 import { TaskDetail } from 'src/app/interface/Response-task';
 import { TaskService } from 'src/app/services/task.service';
 import { TaskV2Service } from 'src/app/services/task-v2.service';
+import { AuthService } from 'src/app/auth/auth.service';
+import { RequestUpdateTaskStatus } from '../../interface/Request-update-task-status';
 
 @Component({
   selector: 'app-header',
@@ -18,12 +20,15 @@ export class HeaderComponent implements OnInit {
   subscription: Subscription;
   notiSubscription: Subscription;
   taskDetailsSubscription: Subscription;
+  roleId: string = '';
+  userId: string = '';
 
   number = 0;
   showAddTask: boolean = false;
   taskDetailList: TaskDetail[] = []
 
   constructor(
+    private authService: AuthService,
     private uiService: UiService,
     private router: Router,
     private notificationService: NotificationService,
@@ -43,7 +48,10 @@ export class HeaderComponent implements OnInit {
       })
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.roleId = this.authService.getRoleId() ?? '';
+    this.userId = this.authService.getUserId() ?? '';
+  }
 
   toggleAddTask() {
     // console.log('toggleAddTask')
@@ -62,7 +70,12 @@ export class HeaderComponent implements OnInit {
 
     // updateTask status
     // taskDetail.status = 'READ'
-    this.taskV2Service.updateTaskStatus(taskDetail).subscribe(() => {});
+    const requestUpdateTaskStatus: RequestUpdateTaskStatus = {
+      userId: taskDetail.userId,
+      taskId: taskDetail.taskId,
+      roleId: this.roleId
+    } 
+    this.taskV2Service.updateTaskStatus(requestUpdateTaskStatus).subscribe(() => {});
   }
 
   ngOnDestroy(): void {
